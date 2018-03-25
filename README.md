@@ -24,7 +24,7 @@ This API uses Metaphor for fetching URL data from multiple sources.
 4. Get URL Information
    
    ```
-   http://localhost:3050/embeds?url=www.human-connection.org/
+   http://localhost:3050/embeds?url=http://www.human-connection.org/
    ```
 
 ## Testing
