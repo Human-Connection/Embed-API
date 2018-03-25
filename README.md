@@ -33,6 +33,7 @@ Simply run `yarn test` and all your tests in the `test/` directory will be run.
 
 ## License
 
-Copyright (c) 2016
+Copyright (c) 2018
+Grzegorz Leoniec
 
 Licensed under the [MIT license](LICENSE).
