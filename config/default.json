@@ -1,0 +1,11 @@
+{
+  "host": "localhost",
+  "port": 3050,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "token": "FduLTjJZXFqHhsGkJueHMbNC6yuuHs9XUic3",
+  "mongodb": "mongodb://localhost:27017/embed_api"
+}

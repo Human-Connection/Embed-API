@@ -1,0 +1,50 @@
+{
+  "name": "embed-api",
+  "description": "Embed API with Redis-Cache",
+  "version": "0.0.0",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Grzegorz Leoniec",
+    "email": "greg@app-interactive.de"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/"
+  },
+  "engines": {
+    "node": "^8.0.0",
+    "yarn": ">= 0.18.0"
+  },
+  "scripts": {
+    "test": "yarn run eslint && yarn run mocha",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "start": "node src/",
+    "dev": "DEBUG=feathers nodemon src/",
+    "mocha": "mocha test/ --recursive --exit"
+  },
+  "dependencies": {
+    "@feathersjs/configuration": "^1.0.2",
+    "@feathersjs/errors": "^3.3.0",
+    "@feathersjs/express": "^1.2.0",
+    "@feathersjs/feathers": "^3.1.3",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "helmet": "^3.12.0",
+    "metaphor": "^3.8.3",
+    "mongoose": "^5.0.11",
+    "serve-favicon": "^2.4.5",
+    "winston": "^2.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "mocha": "^5.0.5",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
+  }
+}

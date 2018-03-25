@@ -1,0 +1,6 @@
+{
+  "host": "EMBED_API_HOST",
+  "port": "EMBED_API_PORT",
+  "token": "EMBED_API_TOKEN",
+  "mongodb": "EMBED_API_MONGO_DB"
+}
