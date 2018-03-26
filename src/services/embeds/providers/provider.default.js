@@ -1,9 +1,17 @@
-
 module.exports = function (app) {
   return class ProviderDefault {
     constructor (options = {}) {
       this.app = app;
-      this.name = 'default';
+
+      options = Object.assign({
+        name: 'default',
+        methods: {
+          metaphor: true, // this is always needed at the mement
+          metascraper: true // this is optional
+        }
+      }, options);
+      this.methods = options.methods;
+      this.name = options.name;
     }
 
     checkURL () {

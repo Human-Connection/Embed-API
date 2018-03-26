@@ -1,14 +1,23 @@
 
 module.exports = function (app) {
-  return class ProviderYouTube {
+  const ProviderDefault = require('./provider.default')(app);
+  return class ProviderYouTube extends ProviderDefault {
     constructor (options = {}) {
-      this.app = app;
-      this.name = 'youtube';
-      this.regex = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/i;
+      options = Object.assign({
+        name: 'youtube',
+        methods: {
+          metaphor: true,
+          metascraper: false
+        }
+      }, options);
+      super(options);
+      this.regex = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/gi;
     }
 
     checkURL (url) {
-      return !!url.match(this.regex);
+      const match = url.match(this.regex);
+      console.log(url, match);
+      return match && match.length > 1;
     }
 
     normalizeURL (url) {

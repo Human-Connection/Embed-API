@@ -5,14 +5,16 @@ module.exports = function (app) {
 
   return class Provider {
     constructor (url) {
+      // list of possible providers plus the default fallback
       const providers = [
         new ProviderYouTube(),
         new ProviderDefault()
       ];
+
+      // find the matching provider by url
       let outputProvider;
       providers.forEach(provider => {
         if (!outputProvider && provider.checkURL(url)) {
-          console.log(provider.name);
           outputProvider = provider;
           return outputProvider;
         }

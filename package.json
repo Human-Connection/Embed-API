@@ -26,6 +26,7 @@
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "start": "node src/",
     "dev": "DEBUG=feathers nodemon src/",
+    "dev:debug": "DEBUG=feathers nodemon --inspect src/",
     "mocha": "mocha test/ --recursive --exit"
   },
   "dependencies": {

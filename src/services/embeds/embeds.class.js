@@ -16,38 +16,40 @@ const engine = new Metaphor.Engine({
   tweet: true
 });
 
-const getMetadata = async (targetURL) => {
+const getMetadata = async (targetURL, Provider) => {
   const data = {
     metaphor: {},
     metascraper: {}
   };
 
-  // console.log('WAITING FOR METADATA...');
-
-  await Promise.all([
-    new Promise((resolve, reject) => {
+  // only get data from requested services
+  let promises = [];
+  if (Provider.methods.metaphor) {
+    promises.push(new Promise((resolve, reject) => {
       try {
         engine.describe(targetURL, (metadata) => {
           data.metaphor = metadata;
-          // console.log('METAPHOR:', metadata);
           resolve(metadata);
         });
       } catch (err) {
         reject(err);
       }
-    }),
-    new Promise(async (resolve, reject) => {
+    }));
+  }
+  if (Provider.methods.metascraper) {
+    promises.push(new Promise(async (resolve, reject) => {
       try {
         const { body: html, url } = await got(targetURL);
         const metadata = await metascraper({ html, url });
         data.metascraper = metadata;
-        // console.log('METASCRAPER:', metadata);
         resolve(metadata);
       } catch (err) {
         reject(err);
       }
-    })
-  ]);
+    }));
+  }
+
+  await Promise.all(promises);
 
   // if (!data.metaphor.icon || data.metaphor.icon.any) {
   //   const { hostname } = new URL(data.metaphor.url);
@@ -87,7 +89,7 @@ class Service {
     this.app = options.app;
     this.embeds = mongoose.model('embeds');
 
-    this.providers = require('./providers')(this.app);
+    this.Provider = require('./providers')(this.app);
   }
 
   async find (params) {
@@ -97,7 +99,7 @@ class Service {
       url = `https://${url}`;
     }
 
-    const Provider = new this.providers(url);
+    const Provider = new this.Provider(url);
     url = Provider.normalizeURL(url);
 
     // 1. check if there is already metadata
@@ -114,7 +116,7 @@ class Service {
     }
 
     // 2. if not or not older then x minutes, get fresh data and save it to the database
-    let metadata = await getMetadata(url);
+    let metadata = await getMetadata(url, Provider);
     metadata = Provider.enrichMetadata(metadata);
 
     if (!metadata.sources) {
