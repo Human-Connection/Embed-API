@@ -9,6 +9,7 @@ module.exports = function (app) {
   const Model = createModel(app);
 
   const options = {
+    app,
     name: 'embeds',
     Model,
     paginate

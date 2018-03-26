@@ -1,6 +1,14 @@
 /* eslint-disable no-unused-vars */
 const errors = require('@feathersjs/errors');
 const mongoose = require('mongoose');
+const { URL } = require('url');
+const metascraper = require('metascraper').load([
+  require('metascraper-date')(),
+  require('metascraper-title')(),
+  require('metascraper-description')(),
+  require('metascraper-image')()
+]);
+const got = require('got');
 
 const Metaphor = require('metaphor');
 const engine = new Metaphor.Engine({
@@ -8,27 +16,89 @@ const engine = new Metaphor.Engine({
   tweet: true
 });
 
-const getMetadata = (url) => {
-  return new Promise((resolve) => {
-    engine.describe(url, (metadata) => {
-      resolve(metadata);
-    });
-  });
+const getMetadata = async (targetURL) => {
+  const data = {
+    metaphor: {},
+    metascraper: {}
+  };
+
+  // console.log('WAITING FOR METADATA...');
+
+  await Promise.all([
+    new Promise((resolve, reject) => {
+      try {
+        engine.describe(targetURL, (metadata) => {
+          data.metaphor = metadata;
+          // console.log('METAPHOR:', metadata);
+          resolve(metadata);
+        });
+      } catch (err) {
+        reject(err);
+      }
+    }),
+    new Promise(async (resolve, reject) => {
+      try {
+        const { body: html, url } = await got(targetURL);
+        const metadata = await metascraper({ html, url });
+        data.metascraper = metadata;
+        // console.log('METASCRAPER:', metadata);
+        resolve(metadata);
+      } catch (err) {
+        reject(err);
+      }
+    })
+  ]);
+
+  // if (!data.metaphor.icon || data.metaphor.icon.any) {
+  //   const { hostname } = new URL(data.metaphor.url);
+  //   data.metaphor.icon = Object.assign(data.metaphor.icon || {}, {
+  //     any: `https://logo.clearbit.com/${hostname}`
+  //   });
+  // }
+
+  if (!data.metascraper) {
+    return data.metaphor;
+  }
+
+  if (!data.metaphor.image && data.metascraper.image) {
+    data.metaphor.image = {
+      url: data.metascraper.image
+    };
+  }
+  if (data.metascraper.title) {
+    data.metaphor.title = data.metascraper.title;
+  }
+  if (data.metascraper.description) {
+    data.metaphor.description = data.metascraper.description;
+  }
+  if (data.metascraper.date) {
+    data.metaphor.date = data.metascraper.date;
+  }
+
+  return data.metaphor;
 };
 
 class Service {
   constructor (options) {
     this.options = options || {};
+    if (!options.app) {
+      throw new Error('embeds services missing option.app');
+    }
     this.app = options.app;
     this.embeds = mongoose.model('embeds');
+
+    this.providers = require('./providers')(this.app);
   }
 
   async find (params) {
     let url = params.query.url;
     url = url.replace(/\/+$/, '');
     if (url.indexOf('://') < 0) {
-      url = `http://${url}`;
+      url = `https://${url}`;
     }
+
+    const Provider = new this.providers(url);
+    url = Provider.normalizeURL(url);
 
     // 1. check if there is already metadata
     let embed = await this.embeds.findOne({
@@ -40,11 +110,12 @@ class Service {
       ]
     });
     if (embed) {
-      return embed.metadata;
+      return Provider.enrichMetadata(embed.metadata);
     }
 
     // 2. if not or not older then x minutes, get fresh data and save it to the database
     let metadata = await getMetadata(url);
+    metadata = Provider.enrichMetadata(metadata);
 
     if (!metadata.sources) {
       throw new errors.NotFound('no data found for url');
@@ -65,10 +136,6 @@ class Service {
 
   async create (data, params) {
     throw errors.NotImplemented();
-
-    // if (Array.isArray(data)) {
-    //   return await Promise.all(data.map(current => this.create(current)));
-    // }
   }
 
   async update (id, data, params) {
