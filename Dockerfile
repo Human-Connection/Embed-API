@@ -17,7 +17,7 @@ ENV EMBED_API_PORT=3050
 # start the application in a autohealing cluster
 #CMD NODE_ENV=production pm2 start server/index.js -n api -i 0 --attach
 # as we have issues with pm2 currently in conjunction with nuxt, we use the standard approach here
-CMD NODE_ENV=production node server/index.js
+CMD NODE_ENV=production node src/
 
 # create working directory
 RUN mkdir -p /var/www/
