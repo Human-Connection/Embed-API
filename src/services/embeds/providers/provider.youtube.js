@@ -16,13 +16,11 @@ module.exports = function (app) {
 
     checkURL (url) {
       const match = url.match(this.regex);
-      console.log(url, match);
       return match && match.length > 1;
     }
 
     normalizeURL (url) {
       const match = url.match(this.regex);
-      console.log(match);
       if (match && match[1]) {
         url = `https://www.youtube.com/watch?v=${match[1]}`;
       }
