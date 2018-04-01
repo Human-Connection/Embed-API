@@ -6,6 +6,16 @@
 
 This API uses [Metaphor](https://www.npmjs.com/package/metaphor) for fetching URL data from multiple sources.
 
+## Start Server
+
+Make sure you have installed [docker](https://www.docker.com/community-edition).
+
+To start the service simply run:
+
+```bash
+docker-compose up
+```
+
 ## Getting Started
 
 1. Make sure you have [NodeJS](https://nodejs.org/), [yarn](https://yarnpkg.com) and [mongoDB](https://www.mongodb.com/download-center#community) installed.
