@@ -6,7 +6,7 @@ module.exports = function (app) {
       options = Object.assign({
         name: 'default',
         methods: {
-          metaphor: true, // this is always needed at the mement
+          metaphor: true, // this is always needed at the moment
           metascraper: true // this is optional
         }
       }, options);
