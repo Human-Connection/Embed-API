@@ -8,7 +8,7 @@ This API uses [Metaphor](https://www.npmjs.com/package/metaphor) for fetching UR
 
 ## Getting Started
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
+1. Make sure you have [NodeJS](https://nodejs.org/), [yarn](https://yarnpkg.com) and [mongoDB](https://www.mongodb.com/download-center#community) installed.
 2. Install your dependencies
 
     ```
