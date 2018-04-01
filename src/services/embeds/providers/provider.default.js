@@ -2,6 +2,7 @@ module.exports = function (app) {
   return class ProviderDefault {
     constructor (options = {}) {
       this.app = app;
+      this.imageBaseUrl = `http://${app.get('host')}:${app.get('port')}/images?url=`;
 
       options = Object.assign({
         name: 'default',
@@ -22,6 +23,11 @@ module.exports = function (app) {
       return url;
     }
 
+    proxyImageUrl (url) {
+      url = encodeURIComponent(url);
+      return this.imageBaseUrl + url;
+    }
+
     enrichMetadata (metadata) {
       const truncate = require('lodash/truncate');
 
@@ -40,6 +46,15 @@ module.exports = function (app) {
           html: embedTemplate.replace(/\s{2,}/igm, '')
         });
       }
+
+      if (metadata.icon && metadata.icon.any) {
+        metadata.icon.any = this.proxyImageUrl(metadata.icon.any);
+      }
+
+      if (metadata.image && metadata.image.url) {
+        metadata.image.url = this.proxyImageUrl(metadata.image.url);
+      }
+
       return metadata;
     }
   };
