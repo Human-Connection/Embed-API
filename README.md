@@ -13,7 +13,15 @@ Make sure you have installed [docker](https://www.docker.com/community-edition).
 To start the service simply run:
 
 ```bash
-docker run 
+docker run --rm --name embed-api humanconnection/embed-api
+```
+
+## Running in Production
+
+Make sure you provide a unique API Key as well as a mongoDB user and password.
+
+```bash
+docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EMBED_API_MONGO_USER=MONGOUSER" -e "EMBED_API_MONGO_PASS=MONGOPASS" humanconnection/embed-api
 ```
 
 ## Development
