@@ -10,15 +10,17 @@ This API uses [Metaphor](https://www.npmjs.com/package/metaphor) for fetching UR
 
 Make sure you have installed [docker](https://www.docker.com/community-edition).
 
-To start the service simply run:
+### Running locally
+
+To test this service on you local machine, simply run:
 
 ```bash
 docker run --rm --name embed-api humanconnection/embed-api
 ```
 
-## Running in Production
+### Running in Production
 
-Make sure you provide a unique API Key as well as a mongoDB user and password.
+Make sure you provide an unique API Key as well as a mongoDB user and password on your production server:
 
 ```bash
 docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EMBED_API_MONGO_USER=MONGOUSER" -e "EMBED_API_MONGO_PASS=MONGOPASS" humanconnection/embed-api
