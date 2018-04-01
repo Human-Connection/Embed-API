@@ -1,11 +1,11 @@
-version: '2'
+version: '2.1'
 
 services:
   mongodb:
     image: mongo:latest
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${EMBED_API_MONGO_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${EMBED_API_MONGO_PASS}
+      - MONGO_INITDB_ROOT_USERNAME=${EMBED_API_MONGO_USER:-MONGOUSER}
+      - MONGO_INITDB_ROOT_PASSWORD=${EMBED_API_MONGO_PASS:-MONGOPASS}
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     ports:
@@ -22,7 +22,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      EMBED_API_HOST: ${EMBED_API_HOST}
+      EMBED_API_HOST: ${EMBED_API_HOST:-0.0.0.0}
       EMBED_API_PORT: 3050
-      EMBED_API_TOKEN: ${EMBED_API_TOKEN}
-      EMBED_API_MONGO_DB: mongodb://${EMBED_API_MONGO_USER}:${EMBED_API_MONGO_PASS}@mongodb:27017/embed_api?authSource=admin
+      EMBED_API_TOKEN: ${EMBED_API_TOKEN:-embedapitoken}
+      EMBED_API_MONGO_DB: mongodb://${EMBED_API_MONGO_USER:-MONGOUSER}:${EMBED_API_MONGO_PASS:-MONGOPASS}@mongodb:27017/embed_api?authSource=admin

@@ -1,12 +1,15 @@
 {
   "name": "embed-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Embed API with Redis-Cache",
   "license": "MIT",
   "homepage": "",
   "main": "src",
   "keywords": [
-    "feathers"
+    "feathers",
+    "embeds",
+    "url",
+    "metainfo"
   ],
   "author": {
     "name": "Grzegorz Leoniec",

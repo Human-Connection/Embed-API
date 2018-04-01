@@ -10,7 +10,7 @@ EXPOSE 3050
 
 # set environment variables
 # ENV NPM_CONFIG_PRODUCTION=false
-# ENV HOST=0.0.0.0
+# ENV EMBED_API_HOST=0.0.0.0
 ENV NODE_ENV=production
 ENV EMBED_API_PORT=3050
 
