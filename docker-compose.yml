@@ -15,6 +15,7 @@ services:
     command: mongod --smallfiles --logpath=/dev/null
   embed-api:
     build: .
+    image: humanconnection/embed-api:latest
     ports:
       - "3050:3050"
     links:
@@ -24,5 +25,6 @@ services:
     environment:
       EMBED_API_HOST: ${EMBED_API_HOST:-0.0.0.0}
       EMBED_API_PORT: 3050
+      EMBED_API_URL: ${EMBED_API_URL:-http://0.0.0.0:3050}
       EMBED_API_TOKEN: ${EMBED_API_TOKEN:-embedapitoken}
       EMBED_API_MONGO_DB: mongodb://${EMBED_API_MONGO_USER:-MONGOUSER}:${EMBED_API_MONGO_PASS:-MONGOPASS}@mongodb:27017/embed_api?authSource=admin

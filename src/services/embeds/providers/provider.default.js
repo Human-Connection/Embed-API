@@ -2,7 +2,7 @@ module.exports = function (app) {
   return class ProviderDefault {
     constructor (options = {}) {
       this.app = app;
-      this.imageBaseUrl = `http://${app.get('host')}:${app.get('port')}/images?url=`;
+      this.imageBaseUrl = `${app.get('baseUrl')}/images?url=`;
 
       options = Object.assign({
         name: 'default',

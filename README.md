@@ -15,7 +15,7 @@ Make sure you have installed [docker](https://www.docker.com/community-edition).
 To test this service on you local machine, simply run:
 
 ```bash
-docker run --rm --name embed-api humanconnection/embed-api
+docker run --rm --name embed-api humanconnection/embed-api:latest
 ```
 
 ### Running in Production
@@ -23,7 +23,7 @@ docker run --rm --name embed-api humanconnection/embed-api
 Make sure you provide an unique API Key as well as a mongoDB user and password on your production server:
 
 ```bash
-docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EMBED_API_MONGO_USER=MONGOUSER" -e "EMBED_API_MONGO_PASS=MONGOPASS" humanconnection/embed-api
+docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EMBED_API_MONGO_USER=MONGOUSER" -e "EMBED_API_MONGO_PASS=MONGOPASS" humanconnection/embed-api:latest
 ```
 
 ## Development
