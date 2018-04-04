@@ -16,7 +16,7 @@ module.exports = function (app) {
   app.use(function (req, res, next) {
     const authentication = req.header('authentication');
     const token = app.get('token')
-    if (!token || allowedRoutes.includes(req.path) || authentication === app.get('token')) {
+    if (allowedRoutes.includes(req.path) || !token || authentication === token) {
       next();
     } else {
       res.status(401).send('Request not authorized');
