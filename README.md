@@ -1,4 +1,6 @@
 # Embed API
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHuman-Connection%2FEmbed-API.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FHuman-Connection%2FEmbed-API?ref=badge_shield)
+
 
 > URL Embed API with Caching
 
@@ -128,3 +130,6 @@ Copyright (c) 2018
 Grzegorz Leoniec
 
 Licensed under the [MIT license](LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHuman-Connection%2FEmbed-API.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHuman-Connection%2FEmbed-API?ref=badge_large)
