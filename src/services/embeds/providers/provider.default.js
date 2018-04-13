@@ -37,6 +37,13 @@ module.exports = function (app) {
         metadata.image.url = this.proxyImageUrl(metadata.image.url);
       }
 
+      if (metadata.embed && metadata.embed.type && metadata.embed.type === 'photo') {
+        if (!metadata.image) {
+          metadata.image = {};
+        }
+        metadata.image.url = this.proxyImageUrl(metadata.url);
+      }
+
       return metadata;
     }
   };
