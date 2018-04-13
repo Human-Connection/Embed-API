@@ -119,7 +119,7 @@ class Service {
     let metadata = await getMetadata(url, Provider);
     metadata = Provider.enrichMetadata(metadata);
 
-    if (!metadata.title) {
+    if (!metadata.title && !metadata.site_name) {
       throw new errors.NotFound('no data found for url');
     }
 
