@@ -39,12 +39,25 @@ const getMetadata = async (targetURL, Provider) => {
   if (Provider.methods.metascraper) {
     promises.push(new Promise(async (resolve, reject) => {
       try {
-        const { body: html, url } = await got(targetURL);
-        const metadata = await metascraper({ html, url });
+        let metadata = {};
+        const head = await got.head(targetURL);
+        if (head.headers['content-type'].indexOf('text') < 0) {
+          if (head.headers['content-type']) {
+            metadata.overwrite = {
+              type: head.headers['content-type'].split('/').shift(),
+              contentType: head.headers['content-type']
+            };
+          }
+        } else {
+          const { body: html, url } = await got(targetURL);
+          metadata = await metascraper({ html, url });
+        }
+
         data.metascraper = metadata;
-        resolve(metadata);
+        resolve(data);
       } catch (err) {
-        reject(err);
+        console.error(err);
+        resolve({});
       }
     }));
   }
@@ -62,6 +75,11 @@ const getMetadata = async (targetURL, Provider) => {
     return data.metaphor;
   }
 
+  if (data.metascraper && data.metascraper.overwrite) {
+    data.metaphor = Object.assign(data.metaphor, data.metascraper.overwrite);
+    delete data.metascraper.overwrite;
+  }
+
   if (!data.metaphor.image && data.metascraper.image) {
     data.metaphor.image = {
       url: data.metascraper.image
@@ -70,6 +88,7 @@ const getMetadata = async (targetURL, Provider) => {
   if (data.metascraper.title) {
     data.metaphor.title = data.metascraper.title;
   }
+
   if (data.metascraper.description) {
     data.metaphor.description = data.metascraper.description;
   }

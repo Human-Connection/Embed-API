@@ -27,6 +27,11 @@ module.exports = function (app) {
     }
 
     enrichMetadata (metadata) {
+      if (metadata.thumbnail && metadata.thumbnail.url && !metadata.image) {
+        metadata.image = {
+          url: metadata.thumbnail.url
+        };
+      }
       return metadata;
     }
   };
