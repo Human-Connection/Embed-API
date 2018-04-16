@@ -1,6 +1,7 @@
 
 module.exports = function (app) {
   const ProviderYouTube = require('./provider.youtube')(app);
+  const ProviderFlickr = require('./provider.flickr')(app);
   const ProviderDefault = require('./provider.default')(app);
 
   return class Provider {
@@ -8,6 +9,7 @@ module.exports = function (app) {
       // list of possible providers plus the default fallback
       const providers = [
         new ProviderYouTube(),
+        new ProviderFlickr(),
         new ProviderDefault()
       ];
 
