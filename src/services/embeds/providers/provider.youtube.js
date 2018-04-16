@@ -1,4 +1,3 @@
-
 module.exports = function (app) {
   const ProviderDefault = require('./provider.default')(app);
   return class ProviderYouTube extends ProviderDefault {
@@ -15,14 +14,13 @@ module.exports = function (app) {
     }
 
     checkURL (url) {
-      const match = url.match(this.regex);
-      return match && match.length > 1;
+      this.match = this.regex.exec(url);
+      return this.match && this.match.length > 1;
     }
 
     normalizeURL (url) {
-      const match = url.match(this.regex);
-      if (match && match[1]) {
-        url = `https://www.youtube.com/watch?v=${match[1]}`;
+      if (this.match && this.match[1]) {
+        url = `https://www.youtube.com/watch?v=${this.match[1]}`;
       }
 
       return url;

@@ -117,16 +117,24 @@ class Service {
 
     // 2. if not or not older then x minutes, get fresh data and save it to the database
     let metadata = await getMetadata(url, Provider);
-    metadata = Provider.enrichMetadata(metadata);
+    try {
+      metadata = Provider.enrichMetadata(metadata);
+    } catch (err) {
+      console.error(err);
+    }
 
     if (!metadata.title && !metadata.site_name) {
       throw new errors.NotFound('no data found for url');
     }
 
-    await this.embeds.create({
-      url,
-      metadata
-    });
+    try {
+      await this.embeds.create({
+        url,
+        metadata
+      });
+    } catch (err) {
+      console.error(err);
+    }
 
     // 3. return cached or fresh metadata
     return metadata;
