@@ -131,7 +131,7 @@ class Service {
       ]
     });
     if (embed) {
-      return Provider.enrichMetadata(embed.metadata);
+      return embed.metadata;
     }
 
     // 2. if not or not older then x minutes, get fresh data and save it to the database
