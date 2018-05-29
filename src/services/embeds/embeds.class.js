@@ -85,8 +85,11 @@ const getMetadata = async (targetURL, Provider) => {
       url: data.metascraper.image
     };
   }
-  if (data.metascraper.title) {
+  if (data.metascraper.title && data.metaphor.title !== data.metaphor.description) {
     data.metaphor.title = data.metascraper.title;
+  }
+  if (data.metaphor.title === data.metaphor.description) {
+    data.metaphor.title = null;
   }
 
   if (data.metascraper.description) {
