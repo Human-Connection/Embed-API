@@ -29,7 +29,7 @@
     "test": "yarn run eslint && yarn run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "start": "node src/",
-    "dev": "concurrently 'mongod --quiet' 'wait-on tcp:27017 && DEBUG=feathers nodemon src/'",
+    "dev": "concurrently 'mongod --dbpath data --quiet' 'wait-on tcp:27017 && DEBUG=feathers nodemon src/'",
     "dev:debug": "DEBUG=feathers nodemon --inspect src/",
     "mocha": "mocha test/ --recursive --exit"
   },
