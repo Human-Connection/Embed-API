@@ -10,7 +10,7 @@ module.exports = function (app) {
         }
       }, options);
       super(options);
-      this.regex = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/gi;
+      this.regex = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})\?(start=.*[0-9])/gi;
     }
 
     checkURL (url) {
@@ -19,7 +19,9 @@ module.exports = function (app) {
     }
 
     normalizeURL (url) {
-      if (this.match && this.match[1]) {
+      if (this.match && this.match[1] && this.match[2]) {
+        url = `https://www.youtube.com/watch?v=${this.match[1]}?${this.match[2]}`;
+      } else if (this.match && this.match[1]) {
         url = `https://www.youtube.com/watch?v=${this.match[1]}`;
       }
 

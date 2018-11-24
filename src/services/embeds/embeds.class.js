@@ -120,10 +120,11 @@ class Service {
     if (url.indexOf('://') < 0) {
       url = `https://${url}`;
     }
-
+    debugger;
     const Provider = new this.Provider(url);
+    debugger;
     url = Provider.normalizeURL(url);
-
+    debugger;
     // 1. check if there is already metadata
     let embed = await this.embeds.findOne({
       $or: [
@@ -133,13 +134,16 @@ class Service {
         { 'metadata.url': `${url}/` }
       ]
     });
+    debugger;
     if (embed) {
+      debugger;
       return embed.metadata;
     }
 
     // 2. if not or not older then x minutes, get fresh data and save it to the database
     let metadata = await getMetadata(url, Provider);
     try {
+      debugger;
       metadata = Provider.enrichMetadata(metadata);
     } catch (err) {
       console.error(err);
@@ -150,6 +154,7 @@ class Service {
     }
 
     try {
+      debugger;
       await this.embeds.create({
         url,
         metadata
@@ -157,7 +162,7 @@ class Service {
     } catch (err) {
       console.error(err);
     }
-
+    debugger;
     // 3. return cached or fresh metadata
     return metadata;
   }
