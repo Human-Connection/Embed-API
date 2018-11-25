@@ -56,8 +56,7 @@ const getMetadata = async (targetURL, Provider) => {
         data.metascraper = metadata;
         resolve(data);
       } catch (err) {
-        console.error(err);
-        resolve({});
+        resolve({err});
       }
     }));
   }
@@ -110,7 +109,6 @@ class Service {
     }
     this.app = options.app;
     this.embeds = mongoose.model('embeds');
-
     this.Provider = require('./providers')(this.app);
   }
 
@@ -140,7 +138,7 @@ class Service {
     try {
       metadata = Provider.enrichMetadata(metadata);
     } catch (err) {
-      console.error(err);
+      return err;
     }
 
     if (!metadata.title && !metadata.site_name) {
@@ -153,7 +151,7 @@ class Service {
         metadata
       });
     } catch (err) {
-      console.error(err);
+      return err;
     }
 
     // 3. return cached or fresh metadata
