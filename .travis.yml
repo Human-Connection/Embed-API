@@ -9,25 +9,24 @@ services:
   # we need docker for building the image and mongo for testing
   - docker
   - mongodb
-install:
-  # nothing!
 
-jobs:
-  include:
-    #- stage: Prepare Cache
-    #  script: true
-    - stage: Build and Test
-      script:
-      - docker build -t humanconnection/embed-api:latest .
-    #- script:
-    #  - yarn install --frozen-lockfile --non-interactive
-    #  - yarn add codacy-coverage
-    #  - yarn eslint
-    #  - NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- test/ --timeout=10000 --exit
-    #  - cat ./coverage/lcov.info | codacy-coverage
+install:
+  - docker build -t humanconnection/embed-api:latest .
+
+script:
+  - docker run humanconnection/embed-api:latest yarn run eslint
+  - docker run humanconnection/embed-api:latest yarn run test
 
 after_success:
   - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push humanconnection/embed-api:latest;
+    wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh &&
+    chmod +x send.sh &&
+    ./send.sh success $WEBHOOK_URL
     fi
+
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL

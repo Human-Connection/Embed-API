@@ -26,7 +26,7 @@ WORKDIR /var/www/
 # install app dependencies
 COPY package.json /var/www/
 COPY yarn.lock /var/www/
-RUN yarn install --frozen-lockfile --non-interactive
+RUN yarn install --frozen-lockfile --non-interactive --production=false
 
 # copy the code to the docker image
 COPY . /var/www/
