@@ -19,7 +19,7 @@ describe('\'embeds\' service', () => {
   });
 
   // Parameters for the find() method on the Service class.
-  let params = {
+  const params = {
     simpleUrl: {
       query: {
         url: 'https://www.youtube.com/watch?v=QWU9YsxXPqw'
