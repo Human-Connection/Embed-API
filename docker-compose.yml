@@ -1,4 +1,4 @@
-version: '2.1'
+version: "3.7"
 
 services:
   mongodb:
@@ -8,23 +8,29 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${EMBED_API_MONGO_PASS:-MONGOPASS}
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
-    ports:
-      - "27017:27017"
     volumes:
-      - ./data/db:/data/db
+      - mongo-data:/data/db
+    networks:
+      - hc-network
     command: mongod --smallfiles --logpath=/dev/null
   embed-api:
     build: .
     image: humanconnection/embed-api:latest
     ports:
-      - "3050:3050"
-    links:
-      - mongodb
+      - 3050:3050
+    networks:
+      - hc-network
     depends_on:
       - mongodb
     environment:
-      EMBED_API_HOST: ${EMBED_API_HOST:-0.0.0.0}
-      EMBED_API_PORT: 3050
-      EMBED_API_URL: ${EMBED_API_URL:-http://0.0.0.0:3050}
-      EMBED_API_TOKEN: ${EMBED_API_TOKEN:-embedapitoken}
-      EMBED_API_MONGO_DB: mongodb://${EMBED_API_MONGO_USER:-MONGOUSER}:${EMBED_API_MONGO_PASS:-MONGOPASS}@mongodb:27017/embed_api?authSource=admin
+      - EMBED_API_HOST=${EMBED_API_HOST:-0.0.0.0}
+      - EMBED_API_PORT=3050
+      - EMBED_API_URL=${EMBED_API_URL:-http://0.0.0.0:3050}
+      - EMBED_API_TOKEN=${EMBED_API_TOKEN:-embedapitoken}
+      - EMBED_API_MONGO_DB=mongodb://${EMBED_API_MONGO_USER:-MONGOUSER}:${EMBED_API_MONGO_PASS:-MONGOPASS}@mongodb:27017/embed_api?authSource=admin
+
+networks:
+  hc-network:
+
+volumes:
+  mongo-data:
