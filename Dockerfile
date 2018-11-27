@@ -1,4 +1,4 @@
-FROM node:8.9-alpine
+FROM node:10-alpine
 LABEL Description="API Service for fetching URL Information like images, icons, descriptions etc. through OpenGraph, oEmbed and other standards. " Vendor="Human-Connection gGmbH" Version="1.0" Maintainer="Human-Connection gGmbH (developer@human-connection.org)"
 
 # update unix packages
