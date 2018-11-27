@@ -56,8 +56,7 @@ const getMetadata = async (targetURL, Provider) => {
         data.metascraper = metadata;
         resolve(data);
       } catch (err) {
-        console.error(err);
-        resolve({});
+        resolve({err});
       }
     }));
   }
@@ -142,7 +141,7 @@ class Service {
     try {
       metadata = Provider.enrichMetadata(metadata);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
 
     if (!metadata.title && !metadata.site_name) {
@@ -155,7 +154,7 @@ class Service {
         metadata
       });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
 
     // 3. return cached or fresh metadata

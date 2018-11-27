@@ -15,7 +15,7 @@ module.exports = function (app) {
   */
   app.use(function (req, res, next) {
     const authentication = req.header('authentication');
-    const token = app.get('token')
+    const token = app.get('token');
     if (allowedRoutes.includes(req.path) || !token || authentication === token) {
       next();
     } else {
