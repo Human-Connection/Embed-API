@@ -22,7 +22,8 @@
     "test": "test/"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.0.0 <11.0.0",
+    "npm": ">=5.0.0 <6.0.0"
   },
   "scripts": {
     "test": "yarn run eslint && yarn run mocha",
