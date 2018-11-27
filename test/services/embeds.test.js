@@ -32,24 +32,25 @@ describe('\'embeds\' service', () => {
     }
   };
 
-  it('GET /embeds?url={simpleUrl}', async () => {
-    // Calls Embeds Service.find(params) method, which will trigger the URL validation
-    await service.find(params.simpleUrl).then((body) => {
+  it('returned URL metadata', async () => {
+    try {
+      // Calls Embeds Service.find(params) method, which will trigger the URL validation
+      let body = await service.find(params.simpleUrl);
       assert.equal(body.site_name.toLowerCase(), 'youtube');
       assert.equal(body.url, params.simpleUrl.query.url);
-    }).catch(err => {
+    } catch (err) {
       return err;
-    });
+    }
   });
 
-  it('GET /embeds?url={startTimeUrl}', async () => {
-    await service.find(params.startTimeUrl).then((body) => {
+  it('returned URL metadata with start time', async () => {
+    try {
+      let body = await service.find(params.startTimeUrl);
       assert.equal(body.site_name.toLowerCase(), 'youtube');
-
       // Start time is only appended to the "video" key and it always returns with a "?start"
       assert.equal(body.video[0].url, 'https://www.youtube.com/embed/QWU9YsxXPqw?start=332');
-    }).catch(err => {
+    } catch (err) {
       return err;
-    });
+    }
   });
 });
