@@ -10,7 +10,7 @@ services:
   - docker
   - mongodb
 install:
-  - yarn install --frozen-lockfile --non-interactive --ignore-engines
+  - yarn install --production=false --frozen-lockfile --non-interactive --ignore-engines
 
 jobs:
   include:
