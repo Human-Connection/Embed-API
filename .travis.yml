@@ -18,7 +18,7 @@ jobs:
       script:
       - yarn add codacy-coverage
       - yarn eslint
-      - NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- test/ --timeout=10000 --exit
+      - cross-env NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- test/ --timeout=10000 --exit
       - cat ./coverage/lcov.info | codacy-coverage
       - docker build -t humanconnection/embed-api:latest .
 
