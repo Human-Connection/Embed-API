@@ -1,32 +1,32 @@
 language: node_js
 node_js:
-  - "8"
+- "8"
 cache:
   yarn: true
   directories:
-    - node_modules
+  - node_modules
 services:
-  # we need docker for building the image and mongo for testing
-  - docker
-  - mongodb
+# we need docker for building the image and mongo for testing
+- docker
+- mongodb
 
 install:
-  - docker build -t humanconnection/embed-api:latest .
+- docker build -t humanconnection/embed-api:latest .
 
 script:
-  - docker run humanconnection/embed-api:latest yarn run eslint
-  - docker run humanconnection/embed-api:latest yarn run test
+- docker run humanconnection/embed-api:latest yarn run eslint
+- docker run humanconnection/embed-api:latest yarn run test
 
 after_success:
-  - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push humanconnection/embed-api:latest;
-    wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh &&
-    chmod +x send.sh &&
-    ./send.sh success $WEBHOOK_URL
-    fi
+- if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
+  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  docker push humanconnection/embed-api:latest;
+  wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh &&
+  chmod +x send.sh &&
+  ./send.sh success $WEBHOOK_URL
+  fi
 
 after_failure:
-  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh failure $WEBHOOK_URL
+- wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+- chmod +x send.sh
+- ./send.sh failure $WEBHOOK_URL
