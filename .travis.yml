@@ -19,7 +19,7 @@ jobs:
       - yarn add codacy-coverage
       - yarn eslint
       - cross-env NODE_ENV=test ./node_modules/.bin/nyc --reporter=lcov --reporter=text ./node_modules/.bin/mocha test/*.js --timeout=10000 --exit
-      - cat ./coverage/lcov.info | codacy-coverage
+      # - cat ./coverage/lcov.info | codacy-coverage
       - docker build -t humanconnection/embed-api:latest .
 
 after_success:
