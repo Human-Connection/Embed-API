@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- "8"
+  - "10"
 cache:
   yarn: true
   directories:
@@ -10,12 +10,21 @@ services:
 - docker
 - mongodb
 
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
 install:
 - docker build -t humanconnection/embed-api:latest .
 
 script:
 - docker run humanconnection/embed-api:latest yarn run eslint
-- docker run humanconnection/embed-api:latest yarn run test
+- docker-compose run --rm embed-api yarn run mocha # some of the tests need mongodb
 
 after_success:
 - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then

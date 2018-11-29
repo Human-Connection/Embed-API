@@ -26,7 +26,8 @@ describe('Feathers application tests', () => {
       return rp({
         url: getUrl('path/to/nowhere'),
         headers: {
-          'Accept': 'text/html'
+          'Accept': 'text/html',
+          'authentication': 'embedapitoken'
         }
       }).catch(res => {
         assert.equal(res.statusCode, 404);
@@ -37,6 +38,9 @@ describe('Feathers application tests', () => {
     it('shows a 404 JSON error without stack trace', () => {
       return rp({
         url: getUrl('path/to/nowhere'),
+        headers: {
+          'authentication': 'embedapitoken'
+        },
         json: true
       }).catch(res => {
         assert.equal(res.statusCode, 404);

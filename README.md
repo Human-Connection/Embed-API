@@ -18,6 +18,13 @@ To test this service on you local machine, simply run:
 docker run --rm --name embed-api humanconnection/embed-api:latest
 ```
 
+You can use docker-compose, too:
+```sh
+docker-compose up
+# wait until the services are up
+curl --header "authentication: embedapitoken" "http://localhost:3050/embeds?url=http://www.human-connection.org/"
+```
+
 ### Running in Production
 
 Make sure you provide an unique API Key as well as a mongoDB user and password on your production server:
@@ -121,6 +128,14 @@ docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EM
 ## Testing
 
 Simply run `yarn test` and all your tests in the `test/` directory will be run.
+
+### Testing with docker-compose
+
+You can run eslint and mocha with:
+```
+- docker-compose run --rm embed-api yarn run eslint
+- docker-compose run --rm embed-api yarn run mocha
+```
 
 ## License
 
