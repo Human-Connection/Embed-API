@@ -5,17 +5,19 @@ cache:
   yarn: true
   directories:
   - node_modules
-addons:
-  apt:
-    packages:
-      - docker-ce
 services:
 # we need docker for building the image and mongo for testing
 - docker
 - mongodb
 
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.2
+
 before_install:
-- docker-compose --version
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 install:
 - docker build -t humanconnection/embed-api:latest .
