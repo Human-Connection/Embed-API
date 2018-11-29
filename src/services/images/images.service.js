@@ -1,8 +1,12 @@
 const fetch = require('node-fetch');
 
+
+
 // ToDo: Add image cache / thumbnail creation
 module.exports = function (app) {
-  return app.use('/images', (req, res) => {
+
+
+  app.use('/images', (req, res) => {
     if (!req.query.url) {
       res.status(404).end('no url found.');
     }
