@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "8"
+  - "10"
 cache:
   yarn: true
   directories:
@@ -10,21 +10,17 @@ services:
   - docker
   - mongodb
 install:
-  # nothing!
+  - yarn install --production=false --frozen-lockfile --non-interactive --ignore-engines
 
 jobs:
   include:
-    #- stage: Prepare Cache
-    #  script: true
     - stage: Build and Test
       script:
+      - yarn add codacy-coverage
+      - yarn eslint
+      - cross-env NODE_ENV=test ./node_modules/.bin/nyc --reporter=lcov --reporter=text ./node_modules/.bin/mocha test/*.js --timeout=10000 --exit
+      # - cat ./coverage/lcov.info | codacy-coverage
       - docker build -t humanconnection/embed-api:latest .
-    #- script:
-    #  - yarn install --frozen-lockfile --non-interactive
-    #  - yarn add codacy-coverage
-    #  - yarn eslint
-    #  - NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- test/ --timeout=10000 --exit
-    #  - cat ./coverage/lcov.info | codacy-coverage
 
 after_success:
   - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
