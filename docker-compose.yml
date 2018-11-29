@@ -16,6 +16,9 @@ services:
   embed-api:
     build: .
     image: humanconnection/embed-api:latest
+    volumes:
+      - .:/var/www
+      - /var/www/node_modules/
     ports:
       - 3050:3050
     networks:

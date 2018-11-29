@@ -129,6 +129,14 @@ docker run --rm --name embed-api -e "EMBED_API_TOKEN=MYSUPERSECRETSTRING" -e "EM
 
 Simply run `yarn test` and all your tests in the `test/` directory will be run.
 
+### Testing with docker-compose
+
+You can run eslint and mocha with:
+```
+- docker-compose run --rm embed-api yarn run eslint
+- docker-compose run --rm embed-api yarn run mocha
+```
+
 ## License
 
 Copyright (c) 2018

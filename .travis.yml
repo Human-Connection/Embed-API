@@ -15,7 +15,7 @@ install:
 
 script:
 - docker run humanconnection/embed-api:latest yarn run eslint
-- docker run humanconnection/embed-api:latest yarn run test
+- docker-compose run --rm embed-api yarn run mocha # some of the tests need mongodb
 
 after_success:
 - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
