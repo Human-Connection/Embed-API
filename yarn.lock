@@ -2941,10 +2941,18 @@ metascraper-author@^3.12.1, metascraper-author@^3.9.2:
     "@metascraper/helpers" "^3.12.1"
     lodash "~4.17.10"
 
-metascraper-date@^3.11.4, metascraper-date@^3.3.0:
+metascraper-date@^3.11.4:
   version "3.11.4"
   resolved "https://registry.yarnpkg.com/metascraper-date/-/metascraper-date-3.11.4.tgz#b4911b5033c466653d1f7c650666caaa7e3d9c82"
   integrity sha1-tJEbUDPEZmU9H3xlBmbKqn49nII=
+  dependencies:
+    chrono-node "~1.3.5"
+    isostring "0.0.1"
+
+metascraper-date@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/metascraper-date/-/metascraper-date-4.0.0.tgz#b862314a28f4b5f67f139a5369577470e51f4597"
+  integrity sha512-WBHRwKA9+rVIv+cEDiZfSj0+JOKAcq9+xeKogFuV3bB2Gt3oXFG5NznsuFcg2bdh9pqgdyKtAQycCarhdJ7rIg==
   dependencies:
     chrono-node "~1.3.5"
     isostring "0.0.1"
