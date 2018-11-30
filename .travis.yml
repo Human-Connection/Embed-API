@@ -4,26 +4,38 @@ node_js:
 cache:
   yarn: true
   directories:
-    - node_modules
+  - node_modules
 services:
-  # we need docker for building the image and mongo for testing
-  - docker
-  - mongodb
-install:
-  - yarn install --production=false --frozen-lockfile --non-interactive --ignore-engines
+# we need docker for building the image and mongo for testing
+- docker
+- mongodb
 
-jobs:
-  include:
-    - stage: Build and Test
-      script:
-      - yarn add codacy-coverage
-      - yarn eslint
-      - cross-env NODE_ENV=test ./node_modules/.bin/nyc --reporter=lcov --reporter=text ./node_modules/.bin/mocha test/*.js --timeout=10000 --exit
-      # - cat ./coverage/lcov.info | codacy-coverage
-      - docker build -t humanconnection/embed-api:latest .
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+- docker build -t humanconnection/embed-api:latest .
+
+script:
+- docker run humanconnection/embed-api:latest yarn run eslint
+- docker-compose run --rm embed-api yarn run mocha # some of the tests need mongodb
 
 after_success:
-  - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push humanconnection/embed-api:latest;
-    fi
+- if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
+  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  docker push humanconnection/embed-api:latest;
+  wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh &&
+  chmod +x send.sh &&
+  ./send.sh success $WEBHOOK_URL
+  fi
+
+after_failure:
+- wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+- chmod +x send.sh
+- ./send.sh failure $WEBHOOK_URL

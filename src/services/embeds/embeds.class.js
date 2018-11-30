@@ -109,7 +109,6 @@ class Service {
     }
     this.app = options.app;
     this.embeds = mongoose.model('embeds');
-
     this.Provider = require('./providers')(this.app);
   }
 
@@ -119,10 +118,8 @@ class Service {
     if (url.indexOf('://') < 0) {
       url = `https://${url}`;
     }
-
     const Provider = new this.Provider(url);
     url = Provider.normalizeURL(url);
-
     // 1. check if there is already metadata
     let embed = await this.embeds.findOne({
       $or: [
@@ -141,7 +138,7 @@ class Service {
     try {
       metadata = Provider.enrichMetadata(metadata);
     } catch (err) {
-      // console.error(err);
+      return err;
     }
 
     if (!metadata.title && !metadata.site_name) {
@@ -154,7 +151,7 @@ class Service {
         metadata
       });
     } catch (err) {
-      // console.error(err);
+      return err;
     }
 
     // 3. return cached or fresh metadata
