@@ -1,5 +1,9 @@
 # Embed API
 
+<p align="center">
+  <a href="https://travis-ci.org/Human-Connection/Embed-API"><img src="https://travis-ci.org/Human-Connection/Embed-API.svg?branch=master" alt="Build Status"></a>
+</p>
+
 > URL Embed API with Caching
 
 ## About
