@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-module.exports = function (app) {
-  mongoose.connect(app.get('mongodb'), {});
-  mongoose.Promise = global.Promise;
+const MONGODB_URI = process.env.EMBED_API_MONGO_DB || 'mongodb://localhost:27017/embeds';
 
+module.exports = function (app) {
+  mongoose.Promise = global.Promise;
+  mongoose.connect(`${MONGODB_URI}`, { useNewUrlParser: true }).catch( (e) => console.log(e));
   app.set('mongooseClient', mongoose);
 };
