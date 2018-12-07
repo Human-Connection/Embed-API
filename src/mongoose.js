@@ -4,6 +4,8 @@ const MONGODB_URI = process.env.EMBED_API_MONGO_DB || 'mongodb://localhost:27017
 
 module.exports = function (app) {
   mongoose.Promise = global.Promise;
-  mongoose.connect(`${MONGODB_URI}`, { useNewUrlParser: true }).catch( (e) => return(e));
+  mongoose.connect(`${MONGODB_URI}`, { useNewUrlParser: true }).catch( (e) => {
+    throw e;
+  });
   app.set('mongooseClient', mongoose);
 };
