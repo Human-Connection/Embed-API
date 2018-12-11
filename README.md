@@ -8,7 +8,7 @@
 
 ## About
 
-This API uses [Metaphor](https://www.npmjs.com/package/metaphor) for fetching URL data from multiple sources.
+This API uses [Metaphor](https://www.npmjs.com/package/metaphor) for fetching URL data from multiple sources, but due to its deprecation, we're working on changing to [Metascraper](https://www.npmjs.com/package/metascraper).
 
 ## How to use this image
 
