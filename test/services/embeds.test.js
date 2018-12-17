@@ -2,7 +2,7 @@ const assert = require('assert');
 const app = require('../../src/app');
 const service = app.service('embeds');
 
-const port = app.get('port') || 3030;
+const port = 3051;
 
 describe('\'embeds\' service', () => {
   before(function(done) {
