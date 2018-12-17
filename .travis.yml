@@ -8,7 +8,6 @@ cache:
 services:
 # we need docker for building the image and mongo for testing
 - docker
-- mongodb
 
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
@@ -21,21 +20,25 @@ before_install:
 
 install:
 - docker build -t humanconnection/embed-api:latest .
+- docker-compose up -d # some of the tests need mongodb
 
 script:
-- docker run humanconnection/embed-api:latest yarn run eslint
-- docker-compose run --rm embed-api yarn run mocha # some of the tests need mongodb
+- docker-compose exec embed-api yarn run lint
+- docker-compose exec embed-api yarn run mocha
 
 after_success:
-- if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
-  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-  docker push humanconnection/embed-api:latest;
-  wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh &&
-  chmod +x send.sh &&
-  ./send.sh success $WEBHOOK_URL
-  fi
+- wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+- chmod +x send.sh
+- ./send.sh success $WEBHOOK_URL
 
 after_failure:
 - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
 - chmod +x send.sh
 - ./send.sh failure $WEBHOOK_URL
+
+deploy:
+  - provider: script
+    script: scripts/docker_push.sh
+    on:
+      branch: master
+      tags: true
