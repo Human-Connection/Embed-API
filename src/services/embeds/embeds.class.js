@@ -10,32 +10,13 @@ const metascraper = require('metascraper').load([
 ]);
 const got = require('got');
 
-const Metaphor = require('metaphor');
-const engine = new Metaphor.Engine({
-  preview: false,
-  tweet: true
-});
-
 const getMetadata = async (targetURL, Provider) => {
   const data = {
-    metaphor: {},
     metascraper: {}
   };
 
   // only get data from requested services
   let promises = [];
-  if (Provider.methods.metaphor) {
-    promises.push(new Promise((resolve, reject) => {
-      try {
-        engine.describe(targetURL, (metadata) => {
-          data.metaphor = metadata;
-          resolve(metadata);
-        });
-      } catch (err) {
-        reject(err);
-      }
-    }));
-  }
   if (Provider.methods.metascraper) {
     promises.push(new Promise(async (resolve, reject) => {
       try {
@@ -63,13 +44,7 @@ const getMetadata = async (targetURL, Provider) => {
 
   await Promise.all(promises);
 
-  // if (!data.metaphor.icon || data.metaphor.icon.any) {
-  //   const { hostname } = new URL(data.metaphor.url);
-  //   data.metaphor.icon = Object.assign(data.metaphor.icon || {}, {
-  //     any: `https://logo.clearbit.com/${hostname}`
-  //   });
-  // }
-
+  // TODO: Figure out why all of this conditionals, and check what can be removed.
   if (!data.metascraper) {
     return data.metaphor;
   }
@@ -79,26 +54,16 @@ const getMetadata = async (targetURL, Provider) => {
     delete data.metascraper.overwrite;
   }
 
-  if (!data.metaphor.image && data.metascraper.image) {
-    data.metaphor.image = {
-      url: data.metascraper.image
-    };
-  }
   if (data.metascraper.title && data.metaphor.title !== data.metaphor.description) {
     data.metaphor.title = data.metascraper.title;
   }
-  if (data.metaphor.title === data.metaphor.description) {
-    data.metaphor.title = null;
-  }
-
   if (data.metascraper.description) {
     data.metaphor.description = data.metascraper.description;
   }
   if (data.metascraper.date) {
     data.metaphor.date = data.metascraper.date;
   }
-
-  return data.metaphor;
+  return data.metascraper;
 };
 
 class Service {
