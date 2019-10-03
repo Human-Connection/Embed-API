@@ -95,6 +95,11 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-3.0.1.tgz#cf844b91ba5fe3ec419384d986d85929067a3058"
   integrity sha512-wo2boFwbKqm53h/Wv2F+ggiTxSFOPaCupa6VHujJle/RZrox5On6zbaoO0B1yFZbj1tCJ6kT2IDpFg9StHL0oA==
 
+"@feathersjs/commons@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
+  integrity sha512-N3CDavCNRp+usgyfDSFXCwETnp4nIEevl5v1nqULGhPYco0SjF15zu4hYyd3GCn0aAwzaIehYyaMcdee9Eo1KQ==
+
 "@feathersjs/configuration@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-1.0.2.tgz#18da733e908fc39726233dbae867c6b0eb3920cd"
@@ -121,15 +126,15 @@
     express "^4.16.2"
     uberproto "^2.0.0"
 
-"@feathersjs/feathers@^3.1.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-3.2.3.tgz#889a64acd7e336d131ce53ea7512e4f48642e218"
-  integrity sha512-T51XlcE+HkAG7nfFMoqRU+bLxPhIYGygAiWQ0Fmc5vOsYtCZlj1AGjJWVL8iX7k2HQgFI2mdinWPoFb2rui03A==
+"@feathersjs/feathers@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.4.tgz#06791dd39408d8dd7948d54c5596f2f91aa8eb09"
+  integrity sha512-2qe8+rkTn7YGFKv7vU0uh367F7SfyYUJuQh+BBmWjupCSH3xsCD5U+sACMZ16442fugWhcIo+41aUnj7e1IQAA==
   dependencies:
-    "@feathersjs/commons" "^3.0.1"
-    debug "^4.0.0"
+    "@feathersjs/commons" "^4.3.0"
+    debug "^4.1.1"
     events "^3.0.0"
-    uberproto "^2.0.2"
+    uberproto "^2.0.4"
 
 "@metascraper/helpers@^3.12.1":
   version "3.12.1"
@@ -1060,10 +1065,10 @@ debug@^3.1.0:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.0, debug@^4.0.1, debug@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.0.tgz#373687bffa678b38b1cd91f861b63850035ddc87"
-  integrity sha512-heNPJUJIqC+xB6ayLAMHaIrmN9HKa7aQO8MGqKpvCA+uJYVcvR6l5kgdrhRuwPFHU7P5/A1w0BjByPHwpfTDKg==
+debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
   dependencies:
     ms "^2.1.1"
 
@@ -4686,7 +4691,7 @@ type-is@~1.6.16:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-uberproto@^2.0.0, uberproto@^2.0.2:
+uberproto@^2.0.0, uberproto@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/uberproto/-/uberproto-2.0.4.tgz#f215bcc227c1b8fd8fccd8d701b9c96dd71ff85d"
   integrity sha512-c/5xjTcztW9XVhrkCycHQRBIAxww5JpDKk/q0zc2tVdQn6ZQvnChWgLvQaWAT1Al5JvRyvloUI15ad41m6dYwg==
